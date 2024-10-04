@@ -1,0 +1,22 @@
+html, body {
+    margin:0;
+    padding:0;
+}
+
+.body {
+    display:flex;
+    flex-direction:column;
+    height:100vh; 
+    width:100%;
+    display:grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+}
+
+.container{
+    flex-grow:1;
+    grid-area: main;
+}
