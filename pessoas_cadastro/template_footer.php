@@ -1,17 +1,7 @@
+<!--
+Este arquivo contém o rodapé das páginas relacionadas ao cadastro de pessoas. 
+-->
+
 <footer>
-    <h3>Projeto desenvolvido por Luann Muryell Ribeiro</h3>
-
+    <h6>Projeto desenvolvido por Luann Muryell Ribeiro.</h6>
 </footer>
-
-<style>
-    footer {
-        padding: 40px;
-        background-color: #c1c1c1;
-        display:flex;
-        justify-content: space-between;
-        align-items:center;
-        margin-top:80px;
-        width:100%;
-        grid-area: footer;
-    }
-</style>
