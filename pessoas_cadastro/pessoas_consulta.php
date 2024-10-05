@@ -39,7 +39,7 @@ Este arquivo contém o código para a página de consulta da tabela de pessoas. 
             }
             ?>
 
-            <a href="pessoas.php" class="btn btn-primary">Voltar</a>
+            <a href="pessoas.php" class="btn btn-primary">Sair</a>
         </div>
     </div>
 

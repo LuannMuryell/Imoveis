@@ -1,3 +1,7 @@
+<!--
+Este arquivo envia para o banco de dados somente as informações que foram atualizadas.
+-->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -5,39 +9,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
     <title>Edição de Registros</title>
 </head>
 
 <body>
+
+    <?php include "template_header_imoveis.php"; ?>
+
     <div class="container">
         <div class="row">
-            <?php
-            include_once "../conexao.php";
+        <?php 
+    include_once "../conexao.php";
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $inscricao_municipal = $_POST['inscricao_municipal'];
-                $logradouro = $_POST['logradouro'];
-                $numero = $_POST['numero'];
-                $bairro = $_POST['bairro'];
-                $complemento = $_POST['complemento'];
-                $contribuinte = $_POST['contribuinte'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $inscricao_municipal = $_POST['inscricao_municipal'];
+        $logradouro = $_POST['logradouro'];
+        $numero = $_POST['numero'];
+        $bairro = $_POST['bairro'];
+        $complemento = $_POST['complemento'];
+        $contribuinte = $_POST['contribuinte'];
 
-                // Atualize os dados no banco de dados
-                $sql = "UPDATE imoveis SET logradouro = ?, numero = ?, bairro = ?, complemento = ?, contribuinte = ? WHERE inscricao_municipal = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssssii", $logradouro, $numero, $bairro, $complemento, $contribuinte, $inscricao_municipal);
+        // Atualize os dados no banco de dados
+        $sql = "UPDATE imoveis SET 
+                    logradouro = '$logradouro', 
+                    numero = '$numero', 
+                    bairro = '$bairro', 
+                    complemento = '$complemento', 
+                    contribuinte = '$contribuinte' 
+                WHERE inscricao_municipal = '$inscricao_municipal'";
 
-                if ($stmt->execute()) {
-                    header("Location: imoveis.php?success=1");
-                    exit;
-                } else {
-                    echo "Erro ao atualizar o imóvel: " . $conn->error;
-                }
-            }
-            ?>
+        if (mysqli_query($conn, $sql)) {
+            confirmacao('Imóvel atualizado com sucesso!', 'success');
+        } else {
+            confirmacao('Erro ao atualizar o imóvel: ' . mysqli_error($conn), 'danger');
+        }
+    }
+?>
             <a href="imoveis.php" class="btn btn-primary">Voltar</a>
         </div>
     </div>
+
+    <?php include "template_footer_imoveis.php"; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>

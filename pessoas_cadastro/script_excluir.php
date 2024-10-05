@@ -1,5 +1,5 @@
 <!--
-Este arquivo recebe executa a exclusão do cadastro desejado no banco de dados.  
+Este arquivo executa a exclusão do cadastro desejado no banco de dados.  
 -->
 
 <!DOCTYPE html>

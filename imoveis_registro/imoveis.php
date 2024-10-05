@@ -1,18 +1,22 @@
+<!--
+Este arquivo é a interface central para visualizar o registro de imóveis. Contém funções para consultar, editar, excluir, pesquisar e criar um novo registro. Além disso, permite que acesse a interface de pessoas. 
+-->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-    <title>Imóveis cadastrados</title>
+    <link href="../style.css" rel="stylesheet">
+    <title>Imóveis registrados</title>
 </head>
 
 <body>
     <?php
     include_once "../conexao.php";
+    include "template_header_imoveis.php";
 
     $pesquisa = $_POST['busca'] ?? '';
     $sql = "SELECT imoveis.*, pessoas.nome AS contribuinte_nome 
@@ -23,45 +27,46 @@
     $dados = mysqli_query($conn, $sql);
     ?>
 
-    <div class="container">
-        <div class="row">
-            <h3>Imóveis cadastrados</h3>
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <h3>Registro de Imóveis - São Leopoldo, RS</h3>
 
-            <!-- Novo Cadastro -->
-            <a href="imoveis_cadastro.php" class="btn btn-primary">Novo cadastro</a>
+                <!-- Novo Cadastro -->
+                <a href="imoveis_cadastro.php" class="btn btn-primary">Novo registro</a>
 
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <form class="d-flex" role="search" action="imoveis.php" method="POST">
-                        <input class="form-control me-2" type="search" placeholder="Ex.: Dom João Becker" aria-label="search" name="busca" autofocus>
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
-                </div>
-            </nav>
+                <nav class="navbar bg-body-tertiary">
+                    <div class="container-fluid">
+                        <form class="d-flex" role="search" action="imoveis.php" method="POST">
+                            <input class="form-control me-2" type="search" placeholder="Ex.: Dom João Becker" aria-label="search" name="busca" autofocus>
+                            <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        </form>
+                    </div>
+                </nav>
 
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Inscrição Municipal</th>
-                        <th scope="col">Logradouro</th>
-                        <th scope="col">Número</th>
-                        <th scope="col">Bairro</th>
-                        <th scope="col">Complemento</th>
-                        <th scope="col">Contribuinte</th>
-                        <th scope="col">Funções</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    while ($linha = mysqli_fetch_assoc($dados)) {
-                        $inscricao_municipal = $linha['inscricao_municipal'];
-                        $logradouro = $linha['logradouro'];
-                        $numero = $linha['numero'];
-                        $bairro = $linha['bairro'];
-                        $complemento = $linha['complemento'];
-                        $contribuinte = $linha['contribuinte_nome'];
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Inscrição Municipal</th>
+                            <th scope="col">Logradouro</th>
+                            <th scope="col">Número</th>
+                            <th scope="col">Bairro</th>
+                            <th scope="col">Complemento</th>
+                            <th scope="col">Contribuinte</th>
+                            <th scope="col">Funções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($linha = mysqli_fetch_assoc($dados)) {
+                            $inscricao_municipal = $linha['inscricao_municipal'];
+                            $logradouro = $linha['logradouro'];
+                            $numero = $linha['numero'];
+                            $bairro = $linha['bairro'];
+                            $complemento = $linha['complemento'];
+                            $contribuinte = $linha['contribuinte_nome'];
 
-                        echo "<tr>
+                            echo "<tr>
                         <th scope='row'>$inscricao_municipal</th>
                         <td>$logradouro</td>
                         <td>$numero</td>
@@ -74,13 +79,13 @@
                         <a href='#' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#confirmacao' onclick=" . '"' . "excluir_dados($inscricao_municipal, '$logradouro')" . '"' . ">Excluir</a>
                         </td>
                         </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-
-            <a href="../index.php" class="btn btn-primary">Voltar</a>
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <?php include "template_footer_imoveis.php"; ?>
     </div>
 
     <!-- Modal para confirmar se quer realmente excluir ou não -->

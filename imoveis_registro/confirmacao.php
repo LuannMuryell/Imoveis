@@ -1,34 +1,35 @@
+<!--
+Este arquivo é a tela para atualizar/editar algum registro desejado. Para evitar preencher todo o formulário novamente, o código já manda os campos preenchidos com as informações antigas. 
+-->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="../style.css" rel="stylesheet">
     <title>Alteração de Registro de Imóveis</title>
 </head>
 
 <body>
 
-    <?php
-    include_once "../conexao.php";
+<?php 
 
-    // Verifique se o 'inscricao_municipal' foi passado via GET
+    include_once "../conexao.php";
+    include "template_header_imoveis.php";
+
     if (isset($_GET['inscricao_municipal'])) {
         $inscricao_municipal = $_GET['inscricao_municipal'];
 
-        // Busque os dados do imóvel no banco de dados
-        $sql = "SELECT * FROM imoveis WHERE inscricao_municipal = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $inscricao_municipal);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        // Buscando os dados do imóvel no banco de dados sem stmt
+        $sql = "SELECT * FROM imoveis WHERE inscricao_municipal = $inscricao_municipal";
+        $result = mysqli_query($conn, $sql);
 
         // Se encontrou o imóvel, preencha os dados
-        if ($result->num_rows > 0) {
-            $imovel = $result->fetch_assoc();
+        if (mysqli_num_rows($result) > 0) {
+            $imovel = mysqli_fetch_assoc($result);
         } else {
             echo "Imóvel não encontrado.";
             exit;
@@ -37,7 +38,7 @@
         echo "ID do imóvel não foi fornecido.";
         exit;
     }
-    ?>
+?>
 
 
 
@@ -90,7 +91,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <a href="imoveis.php" class="btn btn-success">Salvar</a>
                     <a href="imoveis.php" class="btn btn-primary">Voltar</a>
                 </form>
 
@@ -98,6 +99,8 @@
             </div>
         </div>
     </div>
+
+    <?php include "template_footer_imoveis.php"; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
