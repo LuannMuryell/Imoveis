@@ -25,7 +25,7 @@ Este arquivo √© a interface central para visualizar o cadastro de pessoas. Cont√
     <div class="wrapper">
         <div class="container">
             <div class="row">
-                <h3>Pessoas cadastradas</h3>
+                <h3>Cadastro de Pessoas</h3>
                 <a href="pessoas_cadastro.php" class="btn btn-primary">Novo cadastro</a>
                 <nav class="navbar bg-body-tertiary">
                     <div class="container-fluid">

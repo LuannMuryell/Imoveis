@@ -39,11 +39,7 @@ Este arquivo envia para o banco de dados somente as informações que foram atua
                     contribuinte = '$contribuinte' 
                 WHERE inscricao_municipal = '$inscricao_municipal'";
 
-        if (mysqli_query($conn, $sql)) {
-            confirmacao('Imóvel atualizado com sucesso!', 'success');
-        } else {
-            confirmacao('Erro ao atualizar o imóvel: ' . mysqli_error($conn), 'danger');
-        }
+        mysqli_query($conn, $sql);
     }
 ?>
             <a href="imoveis.php" class="btn btn-primary">Voltar</a>
